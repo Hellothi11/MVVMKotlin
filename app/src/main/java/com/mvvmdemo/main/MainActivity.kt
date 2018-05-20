@@ -1,8 +1,10 @@
-package com.example.nguyentamthi.mvvmdemo
+package com.mvvmdemo.main
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import com.example.nguyentamthi.mvvmdemo.R
+import com.mvvmdemo.mangalist.MangaListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -10,15 +12,18 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                message.setText(R.string.title_home)
+                val fragment = MangaListFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                message.setText(R.string.title_dashboard)
+                val fragment = MangaListFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-                message.setText(R.string.title_notifications)
+                val fragment = MangaListFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
         }
