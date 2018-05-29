@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import android.content.Context
 import com.mvvmdemo.data.source.MangaRepository
+import com.mvvmdemo.data.source.UserRepository
 import com.mvvmdemo.data.source.remote.manga.MangaApi
+import com.mvvmdemo.data.source.remote.user.UserApi
+import com.mvvmdemo.login.LoginViewModel
 import com.mvvmdemo.mangalist.MangaListViewModel
 
 /**
@@ -21,7 +23,8 @@ import com.mvvmdemo.mangalist.MangaListViewModel
  */
 class ViewModelFactory private constructor(
         private val application: Application,
-        private val mangaRepository: MangaRepository
+        private val mangaRepository: MangaRepository,
+        private val userRepository: UserRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>) =
@@ -29,6 +32,9 @@ class ViewModelFactory private constructor(
                 when {
                     isAssignableFrom(MangaListViewModel::class.java) ->
                         MangaListViewModel(application, mangaRepository)
+                    isAssignableFrom(LoginViewModel::class.java) ->
+                            LoginViewModel(application, userRepository)
+
                     else ->
                         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
                 }
@@ -45,7 +51,8 @@ class ViewModelFactory private constructor(
         fun getInstance(application: Application) =
                 INSTANCE ?: synchronized(ViewModelFactory::class.java) {
                     INSTANCE ?: ViewModelFactory(application,
-                            RepositoryInjection.provideMangaRepository(application.applicationContext))
+                            RepositoryInjection.provideMangaRepository(),
+                            RepositoryInjection.provideUserRepository())
                             .also { INSTANCE = it }
                 }
     }
@@ -53,8 +60,13 @@ class ViewModelFactory private constructor(
 
 object RepositoryInjection {
 
-    fun provideMangaRepository(context: Context): MangaRepository {
+    fun provideMangaRepository(): MangaRepository {
         val mangaApi = MangaApi.create()
         return MangaRepository.getInstance(mangaApi)
+    }
+
+    fun provideUserRepository(): UserRepository {
+        val userApi = UserApi.create()
+        return UserRepository.getInstance(userApi)
     }
 }
