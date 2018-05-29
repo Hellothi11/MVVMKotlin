@@ -10,7 +10,18 @@ import io.reactivex.Observable
 
 class MangaRepository(val mangaApi: MangaApi) {
 
-    fun getMangas(): Observable<List<MangaItem>> {
+    companion object {
+
+        private var INSTANCE: MangaRepository? = null
+
+        @JvmStatic fun getInstance(mangaApi: MangaApi) =
+                INSTANCE ?: synchronized(MangaRepository::class.java) {
+                    INSTANCE ?: MangaRepository(mangaApi)
+                            .also { INSTANCE = it }
+                }
+    }
+
+    fun getMangaList(): Observable<List<MangaItem>> {
         return mangaApi.getListManga(null, null).map { response -> response.children }
     }
 }
