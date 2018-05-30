@@ -5,7 +5,9 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.BindingAdapter
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.widget.AutoCompleteTextView
+import android.widget.EditText
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 
 /**
  * Created by thint on 5/28/18.
@@ -16,10 +18,3 @@ fun <T : ViewModel> AppCompatActivity.obtainViewModel(viewModelClass: Class<T>) 
 
 fun <T : ViewModel> Fragment.obtainViewModel(viewModelClass: Class<T>) =
         (this.context as AppCompatActivity)?.obtainViewModel(viewModelClass)
-
-@BindingAdapter(value = "bindRequestForcus", requireAll = false)
-fun AutoCompleteTextView.bindRequestFocus(isFocus:Boolean) {
-    if (isFocus) {
-        requestFocus()
-    }
-}

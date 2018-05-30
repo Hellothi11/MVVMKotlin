@@ -11,7 +11,7 @@ import retrofit2.http.POST
  * Created by thint on 5/29/18.
  */
 interface UserApi {
-    @POST("/v2/5185415ba171ea3a00704eed")
+    @POST("/v2/5b0e9d053200002700c19b51")
     fun login(@Body body:HashMap<String, String>)
             : Observable<LoginResponse>
 
@@ -21,7 +21,7 @@ interface UserApi {
             val retrofit = Retrofit.Builder()
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("http://mocky.io")
+                    .baseUrl("http://www.mocky.io")
                     .build()
 
             return retrofit.create(UserApi::class.java)
