@@ -1,6 +1,6 @@
 package com.mvvmdemo.data.source.remote.user
 
-import io.reactivex.Observable
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,7 +13,7 @@ import retrofit2.http.POST
 interface UserApi {
     @POST("/v2/5b0e9d053200002700c19b51")
     fun login(@Body body:HashMap<String, String>)
-            : Observable<LoginResponse>
+            : Call<LoginResponse>
 
     companion object {
         fun create(): UserApi {

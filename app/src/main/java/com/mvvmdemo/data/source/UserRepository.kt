@@ -2,7 +2,7 @@ package com.mvvmdemo.data.source
 
 import com.mvvmdemo.data.source.remote.user.LoginResponse
 import com.mvvmdemo.data.source.remote.user.UserApi
-import io.reactivex.Observable
+import retrofit2.Call
 
 /**
  * Created by thint on 5/29/18.
@@ -20,7 +20,7 @@ class UserRepository(val userApi: UserApi) {
                 }
     }
 
-    fun login(username:String, password:String): Observable<LoginResponse> {
+    fun login(username:String, password:String): Call<LoginResponse> {
         val map = HashMap<String, String>()
         map["username"] = username
         map["password"] = password

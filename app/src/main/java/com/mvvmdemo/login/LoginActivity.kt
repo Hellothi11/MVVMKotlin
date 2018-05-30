@@ -1,35 +1,23 @@
 package com.mvvmdemo.login
 
-import android.Manifest.permission.READ_CONTACTS
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.TargetApi
-import android.app.LoaderManager.LoaderCallbacks
-import android.content.CursorLoader
-import android.content.Loader
-import android.content.pm.PackageManager
-import android.database.Cursor
+import android.content.Intent
 import android.databinding.DataBindingUtil
-import android.net.Uri
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.nguyentamthi.mvvmdemo.R
 import com.example.nguyentamthi.mvvmdemo.databinding.ActivityLoginBinding
+import com.mvvmdemo.common.MyApplication
 import com.mvvmdemo.common.obtainViewModel
+import com.mvvmdemo.main.MainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
-import org.reactivestreams.Subscriber
-import java.util.*
 
 /**
  * A login screen that offers login via email/password.
@@ -90,6 +78,20 @@ class LoginActivity : AppCompatActivity() {
                         password.error = value
                     } else {
                         password.error = null
+                    }
+                })
+
+
+        viewDataBinding.viewmodel?.isLoginSuccess
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe({ value ->
+                    if (value) {
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        showProgress(false)
+                        password.error = MyApplication.getApplicationContext()?.getString(R.string.error_incorrect_password)
+                        password.requestFocus()
                     }
                 })
     }
