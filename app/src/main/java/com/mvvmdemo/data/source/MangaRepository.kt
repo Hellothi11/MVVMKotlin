@@ -1,8 +1,10 @@
 package com.mvvmdemo.data.source
 
 import com.mvvmdemo.data.source.remote.manga.MangaApi
+import com.mvvmdemo.data.source.remote.manga.MangaListResponse
 import com.mvvmdemo.mangalist.MangaItem
 import io.reactivex.Observable
+import retrofit2.Call
 
 /**
  * Created by thint on 5/27/18.
@@ -21,7 +23,7 @@ class MangaRepository(val mangaApi: MangaApi) {
                 }
     }
 
-    fun getMangaList(): Observable<List<MangaItem>> {
-        return mangaApi.getListManga(null, null).map { response -> response.children }
+    fun getMangaList(): Call<MangaListResponse> {
+        return mangaApi.getListManga()
     }
 }

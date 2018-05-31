@@ -2,6 +2,7 @@ package com.mvvmdemo.main
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.example.nguyentamthi.mvvmdemo.R
 import com.mvvmdemo.mangalist.MangaListFragment
@@ -17,12 +18,12 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                val fragment = MangaListFragment()
+                val fragment = Fragment()
                 supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-                val fragment = MangaListFragment()
+                val fragment = Fragment()
                 supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
@@ -35,5 +36,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        navigation.selectedItemId = R.id.navigation_home
     }
 }

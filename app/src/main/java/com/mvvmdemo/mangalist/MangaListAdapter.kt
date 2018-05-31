@@ -9,7 +9,7 @@ import com.example.nguyentamthi.mvvmdemo.databinding.ItemMangaBinding
  * Created by thint on 5/27/18.
  */
 class MangaListAdapter(
-        private val mValues:List<MangaItem>,
+        private var mValues:List<MangaItem>,
         private val mMangaListViewModel: MangaListViewModel
 ) : RecyclerView.Adapter<MangaListAdapter.ViewHolder>() {
 
@@ -49,5 +49,14 @@ class MangaListAdapter(
                 executePendingBindings()
             }
         }
+    }
+
+    fun replaceData(list: List<MangaItem>) {
+        setList(list)
+    }
+
+    private fun setList(list: List<MangaItem>) {
+        this.mValues = list
+        notifyDataSetChanged()
     }
 }
